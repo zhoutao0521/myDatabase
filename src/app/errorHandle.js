@@ -3,11 +3,14 @@ const errorTypes = require('../constants/errorTypes');
 function errorHandle(err, ctx) {
 	let status = 404;
 	let message = 'not found';
-	console.log(err.message);
 	switch (err.message) {
 		case errorTypes.USERNAME_AND_PASSWOED_IS_REQUIRED:
 			status = 400; // bad request
 			message = '用户名和密码不能为空';
+			break;
+		case errorTypes.USER_IS_EXIST:
+			status = 409; // conflic
+			message = '用户名已经存在';
 			break;
 	}
 	ctx.status = status;

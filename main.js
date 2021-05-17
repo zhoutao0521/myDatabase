@@ -2,3 +2,4 @@
 
 // self
 require('./src/app/index');
+require('./src/app/database');

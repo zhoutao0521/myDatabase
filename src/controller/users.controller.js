@@ -1,8 +1,16 @@
+const { addUser: userAdd } = require('../server/users.server');
 class Users {
 	// 添加用户
 	async addUser(ctx, next) {
-		console.log('添加用户');
-		ctx.body = '添加用户成功';
+		const user = ctx.request.body;
+		const isSuccess = await userAdd(user);
+		console.log(isSuccess);
+		if (isSuccess) {
+			ctx.body = '注册用户成功';
+		} else {
+			ctx.body = '注册用户失败';
+		}
+
 		await next();
 	}
 }
