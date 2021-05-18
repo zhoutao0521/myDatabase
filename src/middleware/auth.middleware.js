@@ -33,7 +33,7 @@ const verifyLogin = async function (ctx, next) {
 };
 
 const verifyAuth = async function (ctx, next) {
-	let authorization = ctx.headers.authorization;
+	let authorization = ctx.headers.authorization || '';
 	const token = authorization.replace('Bearer ', '');
 	try {
 		const result = jwt.verify(token, PUBLIC_KEY, {
