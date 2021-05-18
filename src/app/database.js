@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const { createPool } = require('mysql2/promise');
+// const { createPool } = require('mysql2/promise');
 const {
 	DATABASE_HOST,
 	DATABASE_PORT,

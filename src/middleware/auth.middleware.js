@@ -13,15 +13,18 @@ const verifyLogin = async function (ctx, next) {
 	}
 	// 用户名是否存在
 	const users = await getUserByName(username);
-	console.log(users);
+	// console.log(users);
+	const user = users[0];
 	if (!users.length) {
 		return ctx.app.emit('error', new Error(errorTypes.USER_DO_NOT_EXIST), ctx);
 	}
 
 	// 存在,判断密码是否正确
-	if (md5Password(password) !== users[0].password) {
+	if (md5Password(password) !== user.password) {
 		return ctx.app.emit('error', new Error(errorTypes.PASSWORD_IS_WRONG), ctx);
 	}
+
+	ctx.user = user;
 	await next();
 };
 
