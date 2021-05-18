@@ -1,10 +1,9 @@
 const { addUser: userAdd } = require('../server/users.server');
-class Users {
+class UsersController {
 	// 添加用户
 	async addUser(ctx, next) {
 		const user = ctx.request.body;
 		const isSuccess = await userAdd(user);
-		console.log(isSuccess);
 		if (isSuccess) {
 			ctx.body = '注册用户成功';
 		} else {
@@ -15,4 +14,4 @@ class Users {
 	}
 }
 
-module.exports = new Users();
+module.exports = new UsersController();

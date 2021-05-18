@@ -1,10 +1,10 @@
 const conn = require('../app/database');
 
-class Users {
-	async checkUserExist(username) {
+class UsersServer {
+	async getUserByName(username) {
 		const statement = `select * from users where username = ?;`;
 		const [result] = await conn.execute(statement, [username]);
-		return !!result.length;
+		return result;
 	}
 	async addUser(user) {
 		const { username: name, password: ps } = user;
@@ -15,4 +15,4 @@ class Users {
 	}
 }
 
-module.exports = new Users();
+module.exports = new UsersServer();

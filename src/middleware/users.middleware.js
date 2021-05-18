@@ -1,5 +1,5 @@
 const errorTypes = require('../constants/errorTypes');
-const { checkUserExist } = require('../server/users.server');
+const { getUserByName } = require('../server/users.server');
 async function verifyUsers(ctx, next) {
 	const { username = '', password = '' } = ctx.request.body;
 
@@ -12,8 +12,8 @@ async function verifyUsers(ctx, next) {
 		);
 	}
 	// 2.用户名已经存在
-	const isExist = await checkUserExist(username);
-	if (isExist) {
+	const user = await getUserByName(username);
+	if (user.length) {
 		return ctx.app.emit('error', new Error(errorTypes.USER_IS_EXIST), ctx);
 	}
 	await next();
