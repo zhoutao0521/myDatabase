@@ -1,6 +1,7 @@
 const errorTypes = require('../constants/errorTypes');
 const { getUserByName } = require('../server/users.server');
-async function verifyUsers(ctx, next) {
+const { md5Password } = require('../utils');
+const verifyUsers = async function (ctx, next) {
 	const { username = '', password = '' } = ctx.request.body;
 
 	// 1.用户名或者密码不能为空
@@ -17,8 +18,16 @@ async function verifyUsers(ctx, next) {
 		return ctx.app.emit('error', new Error(errorTypes.USER_IS_EXIST), ctx);
 	}
 	await next();
-}
+};
+
+const handlePassword = async function (ctx, next) {
+	const { password } = ctx.request.body;
+	console.log(md5Password(password));
+	ctx.request.body.password = md5Password(password);
+	await next();
+};
 
 module.exports = {
 	verifyUsers,
+	handlePassword,
 };

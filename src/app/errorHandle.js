@@ -12,6 +12,10 @@ function errorHandle(err, ctx) {
 			status = 409; // conflic
 			message = '用户名已经存在';
 			break;
+		case errorTypes.USER_DO_NOT_EXIST:
+			status = 400;
+			message = '该用户不存在';
+			break;
 	}
 	ctx.status = status;
 	ctx.body = message;

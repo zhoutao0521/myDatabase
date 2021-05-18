@@ -8,9 +8,9 @@ class UsersServer {
 	}
 	async addUser(user) {
 		const { username: name, password: ps } = user;
+		console.log(name, ps);
 		const statement = `insert into users (username,password) values (?,?);`;
 		const [result] = await conn.execute(statement, [name, ps]);
-
 		return !!Object.keys(result).length;
 	}
 }
