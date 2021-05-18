@@ -17,6 +17,12 @@ class MomentController {
 		ctx.body = result;
 		await next();
 	}
+	async list(ctx, next) {
+		const { page, size } = ctx.query;
+		const result = await server.list(page, size);
+		ctx.body = result;
+		await next();
+	}
 }
 
 module.exports = new MomentController();
