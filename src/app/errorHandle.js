@@ -16,6 +16,9 @@ function errorHandle(err, ctx) {
 			status = 400;
 			message = '该用户不存在';
 			break;
+		case errorTypes.PASSWORD_IS_WRONG:
+			status = 400;
+			message = '密码错误';
 	}
 	ctx.status = status;
 	ctx.body = message;

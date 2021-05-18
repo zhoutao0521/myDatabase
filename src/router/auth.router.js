@@ -6,6 +6,6 @@ const { verifyLogin } = require('../middleware/auth.middleware');
 const router = new Router();
 
 // 注册用户
-router.post('/login', login);
+router.post('/login', verifyLogin, login);
 
 module.exports = router;
