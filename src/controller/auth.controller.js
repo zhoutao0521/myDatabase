@@ -19,6 +19,11 @@ class AuthController {
 		};
 		await next();
 	}
+	async success(ctx, next) {
+		console.log(ctx.user);
+		ctx.body = '测试成功';
+		await next();
+	}
 }
 
 module.exports = new AuthController();

@@ -19,6 +19,11 @@ function errorHandle(err, ctx) {
 		case errorTypes.PASSWORD_IS_WRONG:
 			status = 400;
 			message = '密码错误';
+			break;
+		case errorTypes.UNAUTHORIZATION:
+			status = 401;
+			message = '无效token';
+			break;
 	}
 	ctx.status = status;
 	ctx.body = message;

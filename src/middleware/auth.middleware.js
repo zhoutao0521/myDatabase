@@ -1,6 +1,10 @@
+const jwt = require('jsonwebtoken');
+// self
 const errorTypes = require('../constants/errorTypes');
 const { getUserByName } = require('../server/users.server');
 const { md5Password } = require('../utils');
+const { PUBLIC_KEY } = require('../app/config');
+
 const verifyLogin = async function (ctx, next) {
 	let { username = '', password = '' } = ctx.request.body;
 	// 用户名或者密码为空
@@ -28,6 +32,21 @@ const verifyLogin = async function (ctx, next) {
 	await next();
 };
 
+const verifyAuth = async function (ctx, next) {
+	let authorization = ctx.headers.authorization;
+	const token = authorization.replace('Bearer ', '');
+	try {
+		const result = jwt.verify(token, PUBLIC_KEY, {
+			algorithms: ['RS256'],
+		});
+		ctx.user = result;
+		await next();
+	} catch (err) {
+		ctx.app.emit('error', new Error(errorTypes.UNAUTHORIZATION), ctx);
+	}
+};
+
 module.exports = {
 	verifyLogin,
+	verifyAuth,
 };
