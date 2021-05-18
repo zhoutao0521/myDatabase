@@ -12,7 +12,6 @@ class MomentController {
 	async detail(ctx, next) {
 		// 获取id
 		const { id } = ctx.params;
-		console.log(id);
 		const result = await server.detail(id);
 		ctx.body = result;
 		await next();
