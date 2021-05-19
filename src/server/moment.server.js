@@ -14,7 +14,7 @@ class MomentServer {
 	}
 	async list(page, size) {
 		const offset = (page - 1) * size + '';
-		const statement = `${sqlFragment} limit ? offset ?;`;
+		const statement = `select m.id id, m.content content, m.createAt createAt,m.updateAt updateAt,json_object('id',u.id,'username',u.username) user,(select count(*) from comment c where c.moment_id = m.id) commentCount from moment m left join users u on m.user_id = u.id limit ? offset ?;`;
 		try {
 			const result = await connection.execute(statement, [size, offset]);
 			return result[0];
@@ -22,6 +22,27 @@ class MomentServer {
 			console.log(err);
 		}
 	}
+
+	async listDetail(page, size) {
+		const offset = (page - 1) * size + '';
+		const statement = `select m.id id, m.content content, m.createAt createAt,m.updateAt updateAt,
+    json_object('id',u.id,'username',u.username) author,
+    json_arrayagg(json_object('id',c.id,'content',c.content,'user',json_object('id',cu.id,'username',cu.username))) commentList
+    from moment m 
+    left join users u on m.user_id = u.id 
+    left join comment c on m.id = c.moment_id
+    left join users cu on c.user_id = cu.id 
+    limit ? offset ?;`;
+		try {
+			console.log('here');
+			const result = await connection.execute(statement, [size, offset]);
+			// console.log(result);
+			return result[0];
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
 	async updateMomentById(id, content) {
 		console.log(id, content);
 		const statement = `update moment set content=? where id=?;`;

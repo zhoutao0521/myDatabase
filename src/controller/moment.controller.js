@@ -23,6 +23,13 @@ class MomentController {
 		await next();
 	}
 
+	async listDetail(ctx, next) {
+		const { page, size } = ctx.query;
+		const result = await server.listDetail(page, size);
+		ctx.body = result;
+		await next();
+	}
+
 	async update(ctx, next) {
 		const { id } = ctx.params;
 		const { content } = ctx.request.body;

@@ -25,4 +25,7 @@ router.patch('/:id', verifyAuth, verifyPermission('comment'), update);
 
 // 删除评论
 router.delete('/:id', verifyAuth, verifyPermission('comment'), remove);
+
+// 获取某动态的评论条数
+// router.get('/',)
 module.exports = router;

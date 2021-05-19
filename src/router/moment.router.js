@@ -9,6 +9,7 @@ const {
 	create,
 	detail,
 	list,
+	listDetail,
 	update,
 	remove,
 } = require('../controller/moment.controller');
@@ -23,6 +24,9 @@ router.get('/:id', detail);
 
 // 获取多条动态
 router.get('/', list);
+
+// 获取多条动态
+router.get('/detail', listDetail);
 
 // 修改动态
 router.patch('/:id', verifyAuth, verifyPermission('moment'), update);
