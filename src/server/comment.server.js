@@ -29,6 +29,18 @@ class CommentServer {
 			console.log(err);
 		}
 	}
+
+	async update(id, content) {
+		try {
+			console.log(id, content);
+			const statement = `update comment set content=? where id=?;`;
+			const result = await connection.execute(statement, [content, id]);
+			console.log(result[0]);
+			return result[0];
+		} catch (err) {
+			console.log(err);
+		}
+	}
 }
 
 module.exports = new CommentServer();

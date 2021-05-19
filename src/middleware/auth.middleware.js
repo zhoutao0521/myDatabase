@@ -47,14 +47,23 @@ const verifyAuth = async function (ctx, next) {
 	}
 };
 
-const verifyPermission = async function (ctx, next) {
-	const { momentId } = ctx.params;
-	const { id } = ctx.user;
-	const isPermission = await momentServer.checkMoment(id, momentId);
-	if (!isPermission) {
-		return ctx.app.emit('error', new Error(errorTypes.NOPERMISSION), ctx);
-	}
-	await next();
+const verifyPermission = function (name) {
+	return async function (ctx, next) {
+		const { id } = ctx.params;
+		const { id: userId } = ctx.user;
+		console.log(id, userId);
+		try {
+			const isPermission = await momentServer.checkSource(name, userId, id);
+			console.log(isPermission);
+			if (!isPermission) {
+				throw new Error();
+			}
+			console.log('here');
+			await next();
+		} catch (err) {
+			ctx.app.emit('error', new Error(errorTypes.NOPERMISSION), ctx);
+		}
+	};
 };
 
 module.exports = {

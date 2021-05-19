@@ -25,8 +25,8 @@ router.get('/:id', detail);
 router.get('/', list);
 
 // 修改动态
-router.patch('/:momentId', verifyAuth, verifyPermission, update);
+router.patch('/:id', verifyAuth, verifyPermission('moment'), update);
 
 // 删除动态
-router.delete('/:momentId', verifyAuth, verifyPermission, remove);
+router.delete('/:id', verifyAuth, verifyPermission('moment'), remove);
 module.exports = router;

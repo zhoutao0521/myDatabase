@@ -24,15 +24,16 @@ class MomentController {
 	}
 
 	async update(ctx, next) {
-		const { momentId: id } = ctx.params;
+		const { id } = ctx.params;
 		const { content } = ctx.request.body;
+		console.log(id, content);
 		const result = await server.updateMomentById(id, content);
 		ctx.body = result;
 		await next();
 	}
 
 	async remove(ctx, next) {
-		const { momentId: id } = ctx.params;
+		const { id } = ctx.params;
 		const result = await server.removeMomentById(id);
 		ctx.body = result;
 
