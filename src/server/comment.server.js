@@ -32,10 +32,19 @@ class CommentServer {
 
 	async update(id, content) {
 		try {
-			console.log(id, content);
 			const statement = `update comment set content=? where id=?;`;
 			const result = await connection.execute(statement, [content, id]);
 			console.log(result[0]);
+			return result[0];
+		} catch (err) {
+			console.log(err);
+		}
+	}
+	async remove(id) {
+		console.log(id);
+		try {
+			const statement = `delete from comment where id=?;`;
+			const result = await connection.execute(statement, [id]);
 			return result[0];
 		} catch (err) {
 			console.log(err);

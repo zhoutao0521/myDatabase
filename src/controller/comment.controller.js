@@ -26,8 +26,14 @@ class CommentController {
 	async update(ctx, next) {
 		const { id } = ctx.params;
 		const { content } = ctx.request.body;
-		console.log(id, content);
 		const result = await commentServer.update(id, content);
+		ctx.body = result;
+		await next();
+	}
+
+	async remove(ctx, next) {
+		const { id } = ctx.params;
+		const result = await commentServer.remove(id);
 		ctx.body = result;
 		await next();
 	}
