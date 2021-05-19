@@ -30,6 +30,14 @@ class MomentController {
 		ctx.body = result;
 		await next();
 	}
+
+	async remove(ctx, next) {
+		const { momentId: id } = ctx.params;
+		const result = await server.removeMomentById(id);
+		ctx.body = result;
+
+		await next();
+	}
 }
 
 module.exports = new MomentController();

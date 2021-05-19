@@ -10,6 +10,7 @@ const {
 	detail,
 	list,
 	update,
+	remove,
 } = require('../controller/moment.controller');
 
 const router = new Router({ prefix: '/moment' });
@@ -26,4 +27,6 @@ router.get('/', list);
 // 修改动态
 router.patch('/:momentId', verifyAuth, verifyPermission, update);
 
+// 删除动态
+router.delete('/:momentId', verifyAuth, verifyPermission, remove);
 module.exports = router;
