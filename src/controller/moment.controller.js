@@ -46,6 +46,19 @@ class MomentController {
 
 		await next();
 	}
+	async addTags(ctx, next) {
+		const { id } = ctx.params;
+		const tagsList = ctx.tagsList;
+		for (let tag of tagsList) {
+			console.log(id, tag.id);
+			const result = await server.checkMomentExistTag(id, tag.id);
+			if (!result) {
+				await server.addTags(id, tag.id);
+			}
+		}
+		ctx.body = '添加标签成功';
+		await next();
+	}
 }
 
 module.exports = new MomentController();

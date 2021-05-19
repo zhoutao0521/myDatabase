@@ -12,7 +12,9 @@ const {
 	listDetail,
 	update,
 	remove,
+	addTags,
 } = require('../controller/moment.controller');
+const { checkAndAdd } = require('../middleware/tag.middleware');
 
 const router = new Router({ prefix: '/moment' });
 
@@ -33,4 +35,7 @@ router.patch('/:id', verifyAuth, verifyPermission('moment'), update);
 
 // 删除动态
 router.delete('/:id', verifyAuth, verifyPermission('moment'), remove);
+
+// 为某动态创建标签
+router.post('/:id/tags', verifyAuth, checkAndAdd, addTags);
 module.exports = router;

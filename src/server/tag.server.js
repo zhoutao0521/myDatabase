@@ -5,6 +5,12 @@ class TagServer {
 		const result = await connection.execute(statement, [name]);
 		return result[0];
 	}
+
+	async getTagByName(name) {
+		const statement = `select * from tags where name =?;`;
+		const result = await connection.execute(statement, [name]);
+		return result[0];
+	}
 }
 
 module.exports = new TagServer();
