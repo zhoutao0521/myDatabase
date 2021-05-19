@@ -1,4 +1,7 @@
+const fs = require('fs');
+const { AVATAR_PATH } = require('../constants/pathType');
 const { addUser: userAdd } = require('../server/users.server');
+const fileServer = require('../server/file.server');
 class UsersController {
 	// 添加用户
 	async addUser(ctx, next) {
@@ -10,6 +13,14 @@ class UsersController {
 			ctx.body = '注册用户失败';
 		}
 
+		await next();
+	}
+
+	async getAvatarById(ctx, next) {
+		const { id } = ctx.params;
+		const { mimetype, filename } = await fileServer.getAvatarById(id);
+		ctx.type = mimetype;
+		ctx.body = fs.createReadStream(`${AVATAR_PATH}/${filename}`);
 		await next();
 	}
 }

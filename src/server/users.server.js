@@ -13,6 +13,13 @@ class UsersServer {
 		const [result] = await conn.execute(statement, [name, ps]);
 		return !!Object.keys(result).length;
 	}
+
+	async addAvatar(id, url) {
+		const statement = `update  users set avatar_URL= ? where id = ?;`;
+		const result = await conn.execute(statement, [url, id]);
+		console.log(result[0]);
+		return result[0];
+	}
 }
 
 module.exports = new UsersServer();

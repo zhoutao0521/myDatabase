@@ -69,7 +69,7 @@ group by m.id;
     select 
 m.id id,
 m.content content,
-json_object('id',u.id,'name',u.username) user,
+json_object('id',u.id,'name',u.username,'avatarUrl',u.avatar_url) user,
 if(count(tm.tag_id),
 json_arrayagg(
 json_object('id',tm.tag_id,'name',t.name)
@@ -79,7 +79,7 @@ tagsList,
 select 
 if(
 count(u.id),json_arrayagg(
-json_object('id',c.id,'content',c.content,'user',json_object('id',u.id,'name',u.username))
+json_object('id',c.id,'content',c.content,'user',json_object('id',u.id,'name',u.username,'avatarUrl',u.avatar_url))
 ),null
 ) comments
 from moment m1
