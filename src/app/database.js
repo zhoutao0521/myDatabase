@@ -14,6 +14,7 @@ const connections = mysql.createPool({
 	user: DATABASE_USER,
 	password: DATABASE_PASSWORD,
 	database: DATABASE_NAME,
+	queueLimit: 10,
 });
 
 connections.getConnection((err, conn) => {

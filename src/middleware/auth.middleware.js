@@ -4,6 +4,7 @@ const errorTypes = require('../constants/errorTypes');
 const { getUserByName } = require('../server/users.server');
 const { md5Password } = require('../utils');
 const { PUBLIC_KEY } = require('../app/config');
+const momentServer = require('../server/auth.server');
 
 const verifyLogin = async function (ctx, next) {
 	let { username = '', password = '' } = ctx.request.body;
@@ -46,7 +47,18 @@ const verifyAuth = async function (ctx, next) {
 	}
 };
 
+const verifyPermission = async function (ctx, next) {
+	const { momentId } = ctx.params;
+	const { id } = ctx.user;
+	const isPermission = await momentServer.checkMoment(id, momentId);
+	if (!isPermission) {
+		return ctx.app.emit('error', new Error(errorTypes.NOPERMISSION), ctx);
+	}
+	await next();
+};
+
 module.exports = {
 	verifyLogin,
 	verifyAuth,
+	verifyPermission,
 };

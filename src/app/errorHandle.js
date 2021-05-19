@@ -24,6 +24,10 @@ function errorHandle(err, ctx) {
 			status = 401;
 			message = '无效token';
 			break;
+		case errorTypes.NOPERMISSION:
+			status = 401;
+			message = '无权限';
+			break;
 	}
 	ctx.status = status;
 	ctx.body = message;

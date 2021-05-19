@@ -22,6 +22,11 @@ class MomentServer {
 			console.log(err);
 		}
 	}
+	async updateMomentById(id, content) {
+		const statement = `update moment set content=? where id=?;`;
+		const result = await connection.execute(statement, [content, id]);
+		return result[0];
+	}
 }
 
 module.exports = new MomentServer();
