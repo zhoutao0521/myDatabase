@@ -2,4 +2,5 @@
 .env
 /src/app/keys
 /src/app/test
-/upload
+upload/avatar
+upload/pic
