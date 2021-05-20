@@ -5,14 +5,18 @@ const {
 	addAvatarInfo,
 	savePicsInfo,
 } = require('../controller/file.controller');
-const { avatarHandler, picHandler } = require('../middleware/file.middleware');
+const {
+	avatarHandler,
+	picHandler,
+	resizeImgs,
+} = require('../middleware/file.middleware');
 const router = new Router({ prefix: '/upload' });
 
 // 上传头像
 router.post('/:id/avatar', verifyAuth, avatarHandler, addAvatarInfo);
 
 // 上传图片
-router.post('/pic', verifyAuth, picHandler, savePicsInfo);
+router.post('/pic', verifyAuth, picHandler, resizeImgs, savePicsInfo);
 
 // test
 // 获取视频

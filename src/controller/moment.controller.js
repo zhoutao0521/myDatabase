@@ -64,8 +64,13 @@ class MomentController {
 	}
 
 	async getPicByFileName(ctx, next) {
-		const { filename } = ctx.params;
+		let { filename } = ctx.params;
+		const { size } = ctx.query;
 		const { mimetype } = await fileServer.getPicInfoByFileName(filename);
+		const sizeArr = ['large', 'middle', 'small'];
+		if (sizeArr.includes(size)) {
+			filename = filename + '-' + size;
+		}
 		ctx.type = mimetype;
 		ctx.body = fs.createReadStream(`${PIC_PATH}/${filename}`);
 		await next();
