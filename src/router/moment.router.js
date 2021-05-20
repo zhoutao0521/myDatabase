@@ -13,6 +13,7 @@ const {
 	update,
 	remove,
 	addTags,
+	getPicByFileName,
 } = require('../controller/moment.controller');
 const { checkAndAdd } = require('../middleware/tag.middleware');
 
@@ -38,4 +39,7 @@ router.delete('/:id', verifyAuth, verifyPermission('moment'), remove);
 
 // 为某动态创建标签
 router.post('/:id/tags', verifyAuth, checkAndAdd, addTags);
+
+// 获取动态图片
+router.get('/pics/:filename', getPicByFileName);
 module.exports = router;

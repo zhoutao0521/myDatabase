@@ -2,3 +2,4 @@
 .env
 /src/app/keys
 /src/app/test
+/upload

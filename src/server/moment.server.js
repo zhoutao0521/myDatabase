@@ -30,7 +30,15 @@ left join comment c on c.moment_id = m1.id
 left join users u on u.id = c.user_id
 where m1.id = m.id
 group by m1.id
-)  comments
+)  comments,
+(
+  select 
+  json_arrayagg(concat('localhost:8080/moment/pics/',p.filename))
+  from moment m2 
+  left join pic p on p.moment_id = m2.id
+  where m2.id = m.id
+  group by m2.id
+  ) pics
 from moment m
 left join users u on m.user_id = u.id
 left join tags_moment tm on tm.moment_id = m.id
@@ -82,12 +90,22 @@ count(u.id),json_arrayagg(
 json_object('id',c.id,'content',c.content,'user',json_object('id',u.id,'name',u.username,'avatarUrl',u.avatar_url))
 ),null
 ) comments
+
 from moment m1
 left join comment c on c.moment_id = m1.id
 left join users u on u.id = c.user_id
 where m1.id = m.id
 group by m1.id
-)  comments
+)  comments,
+(
+  select 
+ if(count(m2.id),
+ json_arrayagg(concat('localhost:8080/moment/pics/',p.filename)),null)
+  from moment m2 
+  left join pic p on p.moment_id = m2.id
+  where m2.id = m.id
+  group by m2.id
+  ) pics
 from moment m
 left join users u on m.user_id = u.id
 left join tags_moment tm on tm.moment_id = m.id

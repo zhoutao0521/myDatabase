@@ -1,4 +1,7 @@
+const fs = require('fs');
 const server = require('../server/moment.server');
+const fileServer = require('../server/file.server');
+const { PIC_PATH } = require('../constants/pathType');
 class MomentController {
 	async create(ctx, next) {
 		// 获取userId
@@ -57,6 +60,14 @@ class MomentController {
 			}
 		}
 		ctx.body = '添加标签成功';
+		await next();
+	}
+
+	async getPicByFileName(ctx, next) {
+		const { filename } = ctx.params;
+		const { mimetype } = await fileServer.getPicInfoByFileName(filename);
+		ctx.type = mimetype;
+		ctx.body = fs.createReadStream(`${PIC_PATH}/${filename}`);
 		await next();
 	}
 }

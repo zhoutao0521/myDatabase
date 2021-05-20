@@ -13,5 +13,20 @@ class FileController {
 		ctx.body = '添加头像成功';
 		await next();
 	}
+	async savePicsInfo(ctx, next) {
+		const { id: userId } = ctx.user;
+		const { momentId: id } = ctx.query;
+		const files = ctx.req.files;
+		// { mimetype, filename, size }
+		// 添加图片到数据
+		for (let pic of files) {
+			const { mimetype, filename, size } = pic;
+			await fileServer.addPicInfo(userId, id, mimetype, filename, size);
+		}
+
+		// 添加图片到
+		ctx.body = '上传动态图片成功';
+		await next();
+	}
 }
 module.exports = new FileController();
