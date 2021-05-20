@@ -34,6 +34,7 @@ const verifyLogin = async function (ctx, next) {
 };
 
 const verifyAuth = async function (ctx, next) {
+	console.log('auth中间件');
 	let authorization = ctx.headers.authorization || '';
 	const token = authorization.replace('Bearer ', '');
 	try {

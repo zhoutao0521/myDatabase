@@ -13,4 +13,12 @@ router.post('/:id/avatar', verifyAuth, avatarHandler, addAvatarInfo);
 
 // 上传图片
 router.post('/pic', verifyAuth, picHandler, savePicsInfo);
+
+// test
+// 获取视频
+router.get('/video', async (ctx, next) => {
+	// ctx.type = 'video/mp4';
+	ctx.body = require('fs').createReadStream('./upload/test/video.mp4');
+	await next();
+});
 module.exports = router;

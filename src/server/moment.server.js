@@ -33,7 +33,7 @@ group by m1.id
 )  comments,
 (
   select 
-  json_arrayagg(concat('localhost:8080/moment/pics/',p.filename))
+  json_arrayagg(concat('http://localhost:8080/moment/pics/',p.filename))
   from moment m2 
   left join pic p on p.moment_id = m2.id
   where m2.id = m.id
@@ -100,7 +100,7 @@ group by m1.id
 (
   select 
  if(count(m2.id),
- json_arrayagg(concat('localhost:8080/moment/pics/',p.filename)),null)
+ json_arrayagg(concat('http://localhost:8080/moment/pics/',p.filename)),null)
   from moment m2 
   left join pic p on p.moment_id = m2.id
   where m2.id = m.id
